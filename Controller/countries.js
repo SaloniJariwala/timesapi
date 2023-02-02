@@ -2,12 +2,12 @@ const asyncHandler = require("express-async-handler");
 const countires = require("../Model/countries");
 
 const getCountries = asyncHandler(async (req, res) => {
-    const allCountries = await countires.find();
+    const allCountries = await countires.find().sort({ name: 1 });
     res.status(200).json(allCountries);
 });
 
 const setCountry = asyncHandler(async (req, res) => {
-    if(!req.body) {
+    if (!req.body) {
         res.status(400).send("data missing for countries");
     } else {
         const country = await countires.create({
@@ -15,7 +15,7 @@ const setCountry = asyncHandler(async (req, res) => {
             name: req.body.name,
             utc_offset: req.body.utc_offset
         });
-        res.status(200).json({country});
+        res.status(200).json({ country });
     }
 });
 
